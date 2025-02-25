@@ -21,19 +21,26 @@ class PokeViewModel: ViewModel() {
 
     private val pokeRepository = PokeRepository()
 
-    private val _pokemon = MutableStateFlow<Pokemon?>(null)
-    val pokemon: StateFlow<Pokemon?> get() = _pokemon
+    fun fetchPokemons() {
 
-    fun fetchPokemon(id: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                pokemons = listOf()
+            )
+        }
+
         viewModelScope.launch {
             try {
-                val fetchedPokemon = pokeRepository.fetchPokemon(id)
+                for(i: Int in 1..10) {
 
-                if(fetchedPokemon != null) {
-                    _uiState.update { currentState ->
-                        currentState.copy(
-                            pokemons = currentState.pokemons + fetchedPokemon
-                        )
+                    val fetchedPokemon = pokeRepository.fetchPokemon(Random.nextInt(1, 1025))
+
+                    if (fetchedPokemon != null) {
+                        _uiState.update { currentState ->
+                            currentState.copy(
+                                pokemons = currentState.pokemons + fetchedPokemon
+                            )
+                        }
                     }
                 }
 
@@ -47,7 +54,7 @@ class PokeViewModel: ViewModel() {
     }
 
     init {
-        fetchPokemon(Random.nextInt(1, 1025))
+        fetchPokemons()
     }
 
 

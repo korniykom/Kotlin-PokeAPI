@@ -12,7 +12,7 @@ class PokeRepository {
                 val response = PokeApi.retrofitService.getPokemon(id)
                 val moves = response.moves.take(2).map { it.move.name }
                 Pokemon(
-                    name = response.name,
+                    name = response.name.capitalize(),
                     picture = response.sprites.front_default,
                     moves = moves
                 )
