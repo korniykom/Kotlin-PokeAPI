@@ -16,32 +16,6 @@ class PokeViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(PokeUiState())
     val uiState: StateFlow<PokeUiState> =_uiState.asStateFlow()
 
-    private fun getPokemon() {
-        viewModelScope.launch {
-            try {
-
-                    val fetchedPokemon = PokeApi
-                        .retrofitService
-                        .getPokemon(1)
-
-                _uiState.update { currentState ->
-                    currentState.copy(
-                        pokemon = fetchedPokemon
-                    )
-                }
 
 
-            } catch(e: IOException) {
-                _uiState.update { currentState ->
-                    currentState.copy(isFetchSuccessful = false)
-                }
-            }
-
-        }
-
-    }
-
-    init {
-        getPokemon()
-    }
 }
