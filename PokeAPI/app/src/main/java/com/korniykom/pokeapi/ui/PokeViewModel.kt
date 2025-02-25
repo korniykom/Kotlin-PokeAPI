@@ -17,7 +17,7 @@ import kotlin.random.Random
 
 class PokeViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(PokeUiState())
-    val uiState: StateFlow<PokeUiState> =_uiState.asStateFlow()
+    val uiState: StateFlow<PokeUiState> = _uiState.asStateFlow()
 
     private val pokeRepository = PokeRepository()
 
@@ -31,7 +31,7 @@ class PokeViewModel: ViewModel() {
 
         viewModelScope.launch {
             try {
-                for(i: Int in 1..10) {
+                for(i: Int in 1..Random.nextInt(10, 16)) {
 
                     val fetchedPokemon = pokeRepository.fetchPokemon(Random.nextInt(1, 1025))
 
@@ -51,6 +51,63 @@ class PokeViewModel: ViewModel() {
             }
         }
 
+    }
+
+    fun sortByName() {
+        _uiState.update { currentState ->
+            val sortedByNamePokemons = currentState.pokemons.sortedBy { it.name }
+            currentState.copy(
+                pokemons = sortedByNamePokemons
+            )
+        }
+        cancelDropDownMenu()
+    }
+
+    fun sortByNameReverse() {
+        _uiState.update { currentState ->
+            val sortedByNamePokemons = currentState.pokemons.sortedByDescending { it.name }
+            currentState.copy(
+                pokemons = sortedByNamePokemons
+            )
+        }
+        cancelDropDownMenu()
+    }
+
+    fun sortByMove() {
+        _uiState.update { currentState ->
+            val sortedByNamePokemons = currentState.pokemons.sortedBy { it.moves[0] }
+            currentState.copy(
+                pokemons = sortedByNamePokemons
+            )
+        }
+        cancelDropDownMenu()
+    }
+
+    fun sortByMoveReverse() {
+        _uiState.update { currentState ->
+            val sortedByNamePokemons = currentState.pokemons.sortedByDescending { it.moves[0] }
+            currentState.copy(
+                pokemons = sortedByNamePokemons
+            )
+        }
+        cancelDropDownMenu()
+    }
+
+    fun toggleDropDownMenu() {
+        _uiState.update { currentState ->
+            val updatedIsDropDownMenu = !currentState.isDropDownMenuOpen
+            currentState.copy(
+                isDropDownMenuOpen = updatedIsDropDownMenu
+            )
+        }
+    }
+
+    fun cancelDropDownMenu() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                isDropDownMenuOpen = false
+            )
+        }
     }
 
     init {
