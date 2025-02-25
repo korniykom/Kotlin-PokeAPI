@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -25,29 +27,11 @@ fun PokeScreen(
     pokeViewModel: PokeViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
+    val uiState by pokeViewModel.uiState.collectAsState();
 
-    val pokemons = listOf(
-        Pokemon(
-            name = "Bulbasaur",
-            picture = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
-        ),
-        Pokemon(
-            name = "Ivysaur",
-            picture = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png"
-        ),
-        Pokemon(
-            name = "Venusaur",
-            picture = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"
-        ),
-        Pokemon(
-            name = "Charmander",
-            picture = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
-        ),
-        Pokemon(
-            name = "Charmeleon",
-            picture = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/2.png"
-        )
-    )
+    val pokemons = uiState.pokemons
+
+
 
     LazyVerticalGrid(
         columns = GridCells.Adaptive(150.dp),
