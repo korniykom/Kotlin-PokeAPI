@@ -22,9 +22,7 @@ fun LogoImage(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0xffeaeaea))
-            .padding(8.dp),
-
+            .background(Color(0xffeaeaea)),
         contentAlignment = Alignment.Center
     ) {
         Image(
