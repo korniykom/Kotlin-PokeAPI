@@ -46,59 +46,53 @@ import com.korniykom.pokeapi.model.Pokemon
 
 @Composable
 fun PokeScreen(
-    pokeViewModel: PokeViewModel = viewModel(),
-    modifier: Modifier = Modifier
+    pokeViewModel: PokeViewModel = viewModel(), modifier: Modifier = Modifier
 ) {
     val uiState by pokeViewModel.uiState.collectAsState();
 
     Column(modifier = modifier.padding(top = 40.dp)) {
-        Box(modifier = modifier.fillMaxWidth())  {
+        Box(modifier = modifier.fillMaxWidth()) {
             IconButton(
-                onClick = { pokeViewModel.toggleDropDownMenu()},
-                modifier = modifier.align(Alignment.TopEnd)) {
+                onClick = { pokeViewModel.toggleDropDownMenu() },
+                modifier = modifier.align(Alignment.TopEnd)
+            ) {
                 Icon(Icons.Default.MoreVert, contentDescription = "More options")
             }
             DropdownMenu(
                 expanded = uiState.isDropDownMenuOpen,
                 onDismissRequest = { pokeViewModel.cancelDropDownMenu() },
-                modifier = modifier.align(Alignment.TopEnd).fillMaxWidth()
+                modifier = modifier
+                    .align(Alignment.TopEnd)
+                    .fillMaxWidth()
 
 
             ) {
-                DropdownMenuItem(
-                    text = { Text("Sort by name") },
-                    onClick = { pokeViewModel.sortByName()}
-                )
-                DropdownMenuItem(
-                    text = { Text("Sort by name reverse") },
-                    onClick = { pokeViewModel.sortByNameReverse()}
-                )
-                DropdownMenuItem(
-                    text = { Text("Sort by move") },
-                    onClick = { pokeViewModel.sortByMove()}
-                )
-                DropdownMenuItem(
-                    text = { Text("Sort by move reverse") },
-                    onClick = { pokeViewModel.sortByMoveReverse()}
-                )
+                DropdownMenuItem(text = { Text("Sort by name") },
+                    onClick = { pokeViewModel.sortByName() })
+                DropdownMenuItem(text = { Text("Sort by name reverse") },
+                    onClick = { pokeViewModel.sortByNameReverse() })
+                DropdownMenuItem(text = { Text("Sort by move") },
+                    onClick = { pokeViewModel.sortByMove() })
+                DropdownMenuItem(text = { Text("Sort by move reverse") },
+                    onClick = { pokeViewModel.sortByMoveReverse() })
             }
         }
         LazyVerticalGrid(
             columns = GridCells.Adaptive(100.dp),
-            modifier = modifier.
-            padding(horizontal = 12.dp).weight(9.0f)
+            modifier = modifier
+                .padding(horizontal = 12.dp)
+                .weight(9.0f)
         ) {
             items(uiState.pokemons) { pokemon ->
                 PokeCard(pokemon)
             }
         }
 
-        Button(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(12.dp)
-                .weight(1.0f),
-           colors = ButtonDefaults.buttonColors(Color.Red),
+        Button(modifier = modifier
+            .fillMaxWidth()
+            .padding(12.dp)
+            .weight(1.0f),
+            colors = ButtonDefaults.buttonColors(Color.Red),
             onClick = { pokeViewModel.fetchPokemons() }
 
         ) {
@@ -113,17 +107,14 @@ fun PokeScreen(
 @Composable
 fun PokeCard(pokemon: Pokemon, modifier: Modifier = Modifier) {
     val painter = rememberAsyncImagePainter(
-        ImageRequest.Builder(LocalContext.current)
-            .data(pokemon.picture)
-            .build()
+        ImageRequest.Builder(LocalContext.current).data(pokemon.picture).build()
     )
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(8.dp)
+        horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier.padding(8.dp)
     ) {
 
-        Image (
+        Image(
             painter = painter,
             contentDescription = pokemon.name,
             contentScale = ContentScale.Crop,

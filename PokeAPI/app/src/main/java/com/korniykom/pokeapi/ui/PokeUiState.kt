@@ -4,7 +4,6 @@ import com.korniykom.pokeapi.model.Pokemon
 
 
 data class PokeUiState(
-    val pokemons: List<Pokemon> = listOf(),
-    var isDropDownMenuOpen: Boolean = false
+    val pokemons: List<Pokemon> = listOf(), var isDropDownMenuOpen: Boolean = false
 
-    )
+)
