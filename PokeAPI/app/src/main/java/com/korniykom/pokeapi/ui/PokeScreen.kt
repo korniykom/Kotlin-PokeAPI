@@ -1,5 +1,6 @@
 package com.korniykom.pokeapi.ui
 
+import ReloadButton
 import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -43,14 +45,21 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.korniykom.pokeapi.model.Pokemon
+import com.korniykom.pokeapi.ui.components.PokeCard
 
 @Composable
 fun PokeScreen(
     pokeViewModel: PokeViewModel = viewModel(), modifier: Modifier = Modifier
 ) {
+
     val uiState by pokeViewModel.uiState.collectAsState();
 
-    Column(modifier = modifier.padding(top = 40.dp)) {
+    Column(modifier = modifier
+        .background(
+            Brush.verticalGradient(
+            colors = listOf(Color(0xFFFFF1F1), Color(0xFFFFDCDC)) // Soft pink gradient
+        )
+        )) {
         Box(modifier = modifier.fillMaxWidth()) {
             IconButton(
                 onClick = { pokeViewModel.toggleDropDownMenu() },
@@ -78,7 +87,7 @@ fun PokeScreen(
             }
         }
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(100.dp),
+            columns = GridCells.Fixed(2),
             modifier = modifier
                 .padding(horizontal = 12.dp)
                 .weight(9.0f)
@@ -88,40 +97,8 @@ fun PokeScreen(
             }
         }
 
-        Button(modifier = modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-            .weight(1.0f),
-            colors = ButtonDefaults.buttonColors(Color.Red),
-            onClick = { pokeViewModel.fetchPokemons() }
-
-        ) {
-            Text(
-                text = "Reload pokemons!",
-
-                )
-        }
-    }
-}
-
-@Composable
-fun PokeCard(pokemon: Pokemon, modifier: Modifier = Modifier) {
-    val painter = rememberAsyncImagePainter(
-        ImageRequest.Builder(LocalContext.current).data(pokemon.picture).build()
-    )
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier.padding(8.dp)
-    ) {
-
-        Image(
-            painter = painter,
-            contentDescription = pokemon.name,
-            contentScale = ContentScale.Crop,
-            modifier = modifier.size(120.dp)
-        )
-        Text(text = pokemon.name)
-        Text(text = "Move 1: ${pokemon.moves[0].capitalize()}", fontSize = 10.sp)
-        Text(text = "Move 2: ${pokemon.moves[1].capitalize()}", fontSize = 10.sp)
+       ReloadButton(
+           modifier = modifier, onClick = { pokeViewModel.fetchPokemons() }
+       )
     }
 }
