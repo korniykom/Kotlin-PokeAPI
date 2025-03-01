@@ -33,7 +33,7 @@ fun ReloadButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
             colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Reload Pokemons!")
+            Text(text = "Reload Pokemons!", color = Color.White)
         }
     }
 }

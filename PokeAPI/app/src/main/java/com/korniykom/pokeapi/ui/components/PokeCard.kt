@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
@@ -41,7 +42,6 @@ fun PokeCard(pokemon: Pokemon, modifier: Modifier = Modifier) {
             .padding(8.dp)
             .shadow(8.dp, RoundedCornerShape(16.dp))
             .border(1.dp, colorResource(id = R.color.red_2), RoundedCornerShape(16.dp))
-
 
 
     ) {
@@ -66,9 +66,18 @@ fun PokeCard(pokemon: Pokemon, modifier: Modifier = Modifier) {
                 contentScale = ContentScale.Crop,
                 modifier = modifier.size(100.dp)
             )
-            Text(text = pokemon.name)
-            Text(text = "Move 1: ${pokemon.moves[0].capitalize()}", fontSize = 8.sp)
-            Text(text = "Move 2: ${pokemon.moves[1].capitalize()}", fontSize = 8.sp)
+            Text(text = pokemon.name, color = Color.White, fontWeight = FontWeight.Bold)
+            Text(
+                text = "Move 1: ${pokemon.moves[0].capitalize()}",
+                fontSize = 8.sp,
+
+                color = Color.White
+            )
+            Text(
+                text = "Move 2: ${pokemon.moves[1].capitalize()}",
+                fontSize = 8.sp,
+                color = Color.White
+            )
         }
     }
 }
