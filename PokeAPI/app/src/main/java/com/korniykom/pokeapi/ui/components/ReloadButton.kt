@@ -16,17 +16,17 @@ import com.korniykom.pokeapi.R
 @Composable
 fun ReloadButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
 
-    val gradient = Brush.verticalGradient(
-        colors = listOf(
-            colorResource(R.color.red_1), colorResource(R.color.red_2)
-        )
-    )
-
     Box(
         modifier = modifier
             .fillMaxWidth()
             .padding(12.dp)
-            .background(gradient, shape = ButtonDefaults.shape)
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        colorResource(R.color.red_1), colorResource(R.color.red_2)
+                    )
+                ), shape = ButtonDefaults.shape
+            )
     ) {
         Button(
             onClick = { onClick() },
