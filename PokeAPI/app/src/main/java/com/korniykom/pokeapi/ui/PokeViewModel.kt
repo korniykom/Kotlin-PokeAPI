@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.korniykom.pokeapi.data.PokeRepository
-import com.korniykom.pokeapi.model.Pokemon
-import com.korniykom.pokeapi.network.PokeApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,8 +12,7 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 import kotlin.random.Random
 
-
-class PokeViewModel: ViewModel() {
+class PokeViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(PokeUiState())
     val uiState: StateFlow<PokeUiState> = _uiState.asStateFlow()
 
@@ -31,9 +28,9 @@ class PokeViewModel: ViewModel() {
 
         viewModelScope.launch {
             try {
-                for(i: Int in 1..Random.nextInt(10, 16)) {
+                for (i: Int in 1..Random.nextInt(10, 16)) {
 
-                    val fetchedPokemon = pokeRepository.fetchPokemon(Random.nextInt(1, 1025))
+                    val fetchedPokemon = pokeRepository.fetchPokemon(Random.nextInt(1, 1024))
 
                     if (fetchedPokemon != null) {
                         _uiState.update { currentState ->

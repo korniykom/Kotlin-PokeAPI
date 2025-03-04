@@ -16,7 +16,7 @@ class PokeRepository {
                     picture = response.sprites.front_default,
                     moves = moves
                 )
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 null
             }
         }
