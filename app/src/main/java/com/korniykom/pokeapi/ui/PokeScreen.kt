@@ -79,7 +79,7 @@ fun PokeScreen(
                 }
             }
 
-            LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+            LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 180.dp)) {
                 items(uiState.pokemons) { pokemon ->
                     PokeCard(pokemon)
                 }
